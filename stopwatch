@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stopwatch</title>
+  <style>
+    body {
+
+
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color:  teal;
+    }
+    .stopwatch {
+      text-align: center;
+    }
+    .time {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    .buttons button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      color: white;
+    }
+    .start {
+      background-color: green;
+    }
+    .stop {
+      background-color: red;
+    }
+    .reset {
+      background-color: yellow;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="stopwatch">
+    <div class="time" id="display">00:00:00</div>
+    <div class="buttons">
+      <button class="start" id="startButton">Start</button>
+      <button class="stop" id="stopButton">Stop</button>
+      <button class="reset" id="resetButton">Reset</button>
+    </div>
+  </div>
+  <script>
+    let timer;
+    let seconds = 0;
+    let running = false;
+    const display = document.getElementById('display');
+
+    function formatTime(sec) {
+      const h = Math.floor(sec / 3600).toString().padStart(2, '0');
+      const m = Math.floor((sec % 3600) / 60).toString().padStart(2, '0');
+      const s = (sec % 60).toString().padStart(2, '0');
+      return `${h}:${m}:${s}`;
+    }
+
+    function startTimer() {
+      if (!running) {
+        running = true;
+        timer = setInterval(() => {
+          seconds++;
+          display.innerText = formatTime(seconds);
+        }, 1000);
+      }
+    }
+
+    function stopTimer() {
+      if (running) {
+        clearInterval(timer);
+        running = false;
+      }
+    }
+
+    function resetTimer() {
+      stopTimer();
+      seconds = 0;
+      display.innerText = formatTime(seconds);
+    }
+
+    document.getElementById('startButton').addEventListener('click', startTimer);
+    document.getElementById('stopButton').addEventListener('click', stopTimer);
+    document.getElementById('resetButton').addEventListener('click', resetTimer);
+  </script>
+</body>
+</html>
